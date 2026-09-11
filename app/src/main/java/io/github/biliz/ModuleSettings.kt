@@ -45,6 +45,7 @@ object ModuleSettings {
     const val KEY_PURIFY_HOME_RECOMMEND_GAME_PROMO_ENABLED = "purify_home_recommend_game_promo_enabled"
     const val KEY_HOME_RECOMMEND_TITLE_KEYWORDS = "home_recommend_title_keywords"
     const val KEY_HOME_RECOMMEND_VERTICAL_AV_DETAIL_ENABLED = "home_recommend_vertical_av_detail_enabled"
+    const val KEY_STORY_TO_NORMAL_VIDEO_ENABLED = KEY_HOME_RECOMMEND_VERTICAL_AV_DETAIL_ENABLED
     const val KEY_HOME_RECOMMEND_PRELOAD_ENABLED = "home_recommend_preload_enabled"
     const val KEY_DYNAMIC_PREFERRED_VIDEO_TAB_ENABLED = "dynamic_preferred_video_tab_enabled"
     const val KEY_DYNAMIC_REMOVE_CITY_TAB_ENABLED = "dynamic_remove_city_tab_enabled"
@@ -585,8 +586,11 @@ object ModuleSettings {
             .take(MAX_HOME_RECOMMEND_TITLE_KEYWORDS)
             .toList()
 
+    fun isStoryToNormalVideoEnabled(prefs: SharedPreferences): Boolean =
+        prefs.getBoolean(KEY_STORY_TO_NORMAL_VIDEO_ENABLED, false)
+
     fun isHomeRecommendVerticalAvDetailEnabled(prefs: SharedPreferences): Boolean =
-        prefs.getBoolean(KEY_HOME_RECOMMEND_VERTICAL_AV_DETAIL_ENABLED, false)
+        isStoryToNormalVideoEnabled(prefs)
 
     fun isHomeRecommendPreloadEnabled(prefs: SharedPreferences): Boolean =
         prefs.getBoolean(KEY_HOME_RECOMMEND_PRELOAD_ENABLED, false)

@@ -131,6 +131,7 @@ class PlayerUiHook(env: RoamingEnv) : BaseRoamingHook(env) {
                 .filter { it.name in setOf("startActivity", "startActivityForResult") }
                 .forEach { method ->
                     env.hookBefore(method) { param ->
+                        if (!ModuleSettings.isStoryToNormalVideoEnabled(prefs)) return@hookBefore
                         val intent = param.args.firstOrNull() as? Intent ?: return@hookBefore
                         rewriteStoryIntent(intent)
                     }
@@ -141,6 +142,7 @@ class PlayerUiHook(env: RoamingEnv) : BaseRoamingHook(env) {
                 .filter { it.name == "startActivity" }
                 .forEach { method ->
                     env.hookBefore(method) { param ->
+                        if (!ModuleSettings.isStoryToNormalVideoEnabled(prefs)) return@hookBefore
                         val intent = param.args.firstOrNull() as? Intent ?: return@hookBefore
                         rewriteStoryIntent(intent)
                     }
@@ -156,6 +158,7 @@ class PlayerUiHook(env: RoamingEnv) : BaseRoamingHook(env) {
                     val uriIndex = paramTypes.indexOfFirst { it == Uri::class.java }
                     if (strIndex >= 0) {
                         env.hookBefore(method) { param ->
+                            if (!ModuleSettings.isStoryToNormalVideoEnabled(prefs)) return@hookBefore
                             val url = param.args.getOrNull(strIndex) as? String ?: return@hookBefore
                             val rewritten = rewriteStoryUrl(url)
                             if (rewritten != null) {
@@ -165,6 +168,7 @@ class PlayerUiHook(env: RoamingEnv) : BaseRoamingHook(env) {
                     }
                     if (uriIndex >= 0) {
                         env.hookBefore(method) { param ->
+                            if (!ModuleSettings.isStoryToNormalVideoEnabled(prefs)) return@hookBefore
                             val uri = param.args.getOrNull(uriIndex) as? Uri ?: return@hookBefore
                             val rewritten = rewriteStoryUrl(uri.toString())
                             if (rewritten != null) {
@@ -231,6 +235,7 @@ class PlayerUiHook(env: RoamingEnv) : BaseRoamingHook(env) {
                 it.name == "getString" && it.parameterCount == 2
             }?.let { method ->
                 env.hookBefore(method) { param ->
+                    if (!ModuleSettings.isStoryToNormalVideoEnabled(prefs)) return@hookBefore
                     val key = param.args[0] as? String ?: return@hookBefore
                     if (key == "fullplayer_vertical") {
                         param.result = "0"
@@ -242,12 +247,14 @@ class PlayerUiHook(env: RoamingEnv) : BaseRoamingHook(env) {
                 it.name == "getBoolean" && it.parameterCount == 2
             }?.let { method ->
                 env.hookBefore(method) { param ->
+                    if (!ModuleSettings.isStoryToNormalVideoEnabled(prefs)) return@hookBefore
                     val key = param.args[0] as? String ?: return@hookBefore
                     if (key == "fullscreen2story" || key == "fullscreen_to_story" || key == "vertical_fullplayer_to_story") {
                         param.result = false
                     }
                 }
             }
+
         }.onFailure {
             log("PlayerUi: installVerticalPlayerConfigHook failed", it)
         }

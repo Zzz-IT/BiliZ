@@ -160,8 +160,8 @@
     <string name="home_recommend_title_keyword_enabled_summary">已配置 %1$d 个关键词：%2$s</string>
     <string name="home_recommend_title_keyword_dialog_title">标题关键词屏蔽</string>
     <string name="home_recommend_title_keyword_hint">使用换行、逗号或分号分隔</string>
-    <string name="home_recommend_vertical_av_detail_title">默认以详情页打开竖屏视频</string>
-    <string name="home_recommend_vertical_av_detail_summary">首页推荐中的竖屏视频点开后默认进入详情页。</string>
+    <string name="home_recommend_vertical_av_detail_title">竖屏视频转为普通视频播放</string>
+    <string name="home_recommend_vertical_av_detail_summary">点击竖屏视频时以普通详情页自适应播放，拦截进入全屏短视频流，保障侧滑手势且顶栏图标不重复。</string>
     <string name="home_recommend_preload_title">首页推荐预加载</string>
     <string name="home_recommend_preload_summary">扩大首页推荐的原生预取距离，减少滑到底部时的等待。</string>
     <string name="home_recommend_custom_filter_title">首页卡片过滤</string>
